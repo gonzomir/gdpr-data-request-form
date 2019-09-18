@@ -40,7 +40,7 @@
 			'value_submit'           => esc_html__( 'Send Request', 'gdpr-data-request-form' ),
 			'request_type'           => 'both',
 		);
-		
+
 		// Filter string array
 		$args = wp_parse_args( $args, array_merge( $defaults, apply_filters( 'privacy_data_request_form_defaults', $defaults ) ) );
 
@@ -77,6 +77,8 @@
 				</div>
 			<?php endif; ?>
 
+			<?php if ( ! is_user_logged_in() ) : ?>
+
 				<p class="gdrf-field gdrf-field-email">
 					<label for="gdrf_data_email">
 						<?php echo esc_html( $args['label_input_email'] ); ?>
@@ -92,6 +94,8 @@
 					<input type="text" id="gdrf_data_human" name="gdrf_data_human" required />
 				</p>
 
+			<?php endif; ?>
+
 				<p class="gdrf-field gdrf-field-submit">
 					<input id="gdrf-submit-button" type="submit" value="<?php echo esc_attr( $args['value_submit'] ); ?>" />
 				</p>
@@ -102,5 +106,5 @@
 			// Display error message
 			return esc_html__( 'This plugin requires WordPress 4.9.6.', 'gdpr-data-request-form' );
 		}
-		
+
 	}

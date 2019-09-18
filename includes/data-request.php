@@ -25,6 +25,15 @@ function gdrf_data_request() {
 		die();
 	}
 
+	/**
+	 * If the form is sent by logged-in user, use her email and bypass human verification.
+	 */
+	if ( is_user_logged_in() ) {
+		$user = wp_get_current_user();
+		$gdrf_email = $user->user_email;
+		$gdrf_human = $gdrf_answer;
+	}
+
 	if ( ! empty( $gdrf_email ) && ! empty( $gdrf_human ) ) {
 		if ( ! wp_verify_nonce( $gdrf_nonce, 'gdrf_nonce' ) ) {
 			$gdrf_error[] = esc_html__( 'Security check failed, please refresh this page and try to submit the form again.', 'gdpr-data-request-form' );
